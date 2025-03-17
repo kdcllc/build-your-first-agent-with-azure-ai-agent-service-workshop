@@ -9,7 +9,8 @@
             "type": "debugpy",
             "request": "launch",
             "program": "src/workshop/main.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/src/workshot/.env"
         }
     ]
 }
