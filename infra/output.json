@@ -1,0 +1,201 @@
+{
+  "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Resources/deployments/main",
+  "location": null,
+  "name": "main",
+  "properties": {
+    "correlationId": "8516b4b6-ecd5-4760-af92-43c42821260c",
+    "debugSetting": null,
+    "dependencies": [
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Resources/deployments/dependencies-agent-wksp-nvfb-deployment",
+            "resourceGroup": "rg-contoso-agent-workshop",
+            "resourceName": "dependencies-agent-wksp-nvfb-deployment",
+            "resourceType": "Microsoft.Resources/deployments"
+          },
+          {
+            "apiVersion": "2022-09-01",
+            "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Resources/deployments/dependencies-agent-wksp-nvfb-deployment",
+            "resourceGroup": "rg-contoso-agent-workshop",
+            "resourceName": "dependencies-agent-wksp-nvfb-deployment",
+            "resourceType": "Microsoft.Resources/deployments"
+          }
+        ],
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Resources/deployments/ai-agent-wksp-nvfb-deployment",
+        "resourceGroup": "rg-contoso-agent-workshop",
+        "resourceName": "ai-agent-wksp-nvfb-deployment",
+        "resourceType": "Microsoft.Resources/deployments"
+      },
+      {
+        "dependsOn": [
+          {
+            "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Resources/deployments/ai-agent-wksp-nvfb-deployment",
+            "resourceGroup": "rg-contoso-agent-workshop",
+            "resourceName": "ai-agent-wksp-nvfb-deployment",
+            "resourceType": "Microsoft.Resources/deployments"
+          },
+          {
+            "apiVersion": "2022-09-01",
+            "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Resources/deployments/ai-agent-wksp-nvfb-deployment",
+            "resourceGroup": "rg-contoso-agent-workshop",
+            "resourceName": "ai-agent-wksp-nvfb-deployment",
+            "resourceType": "Microsoft.Resources/deployments"
+          }
+        ],
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Resources/deployments/ai-agent-workshop-nvfb-deployment",
+        "resourceGroup": "rg-contoso-agent-workshop",
+        "resourceName": "ai-agent-workshop-nvfb-deployment",
+        "resourceType": "Microsoft.Resources/deployments"
+      }
+    ],
+    "duration": "PT3M0.3256229S",
+    "error": null,
+    "mode": "Incremental",
+    "onErrorDeployment": null,
+    "outputResources": [
+      {
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.CognitiveServices/accounts/agent-workshop-nvfb",
+        "resourceGroup": "rg-contoso-agent-workshop"
+      },
+      {
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.CognitiveServices/accounts/agent-workshop-nvfb/deployments/gpt-4o",
+        "resourceGroup": "rg-contoso-agent-workshop"
+      },
+      {
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.MachineLearningServices/workspaces/ai-agent-wksp-nvfb",
+        "resourceGroup": "rg-contoso-agent-workshop"
+      },
+      {
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.MachineLearningServices/workspaces/ai-agent-wksp-nvfb/connections/ai-agent-wksp-nvfb-connection-AIServices",
+        "resourceGroup": "rg-contoso-agent-workshop"
+      },
+      {
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.MachineLearningServices/workspaces/ai-agent-workshop-nvfb",
+        "resourceGroup": "rg-contoso-agent-workshop"
+      },
+      {
+        "id": "/subscriptions/14dc1cf2-bc71-4fb3-87d5-208a6731f6cc/resourceGroups/rg-contoso-agent-workshop/providers/Microsoft.Storage/storageAccounts/agentservicestoragenvfb",
+        "resourceGroup": "rg-contoso-agent-workshop"
+      }
+    ],
+    "outputs": {
+      "aiProjectName": {
+        "type": "String",
+        "value": "ai-agent-workshop-nvfb"
+      },
+      "resourceGroupName": {
+        "type": "String",
+        "value": "rg-contoso-agent-workshop"
+      },
+      "subscriptionId": {
+        "type": "String",
+        "value": "14dc1cf2-bc71-4fb3-87d5-208a6731f6cc"
+      }
+    },
+    "parameters": {
+      "aiHubDescription": {
+        "type": "String",
+        "value": "A standard hub resource required for the agent setup."
+      },
+      "aiHubFriendlyName": {
+        "type": "String",
+        "value": "Agents standard hub resource"
+      },
+      "aiHubName": {
+        "type": "String",
+        "value": "agent-wksp"
+      },
+      "aiProjectDescription": {
+        "type": "String",
+        "value": "A standard project resource required for the agent setup."
+      },
+      "aiProjectFriendlyName": {
+        "type": "String",
+        "value": "Agent-Service-Workshop"
+      },
+      "aiProjectName": {
+        "type": "String",
+        "value": "agent-workshop"
+      },
+      "aiServicesName": {
+        "type": "String",
+        "value": "agent-workshop"
+      },
+      "deploymentTimestamp": {
+        "type": "String",
+        "value": "20250317160134"
+      },
+      "location": {
+        "type": "String",
+        "value": "eastus2"
+      },
+      "modelCapacity": {
+        "type": "Int",
+        "value": 140
+      },
+      "modelFormat": {
+        "type": "String",
+        "value": "OpenAI"
+      },
+      "modelLocation": {
+        "type": "String",
+        "value": "eastus2"
+      },
+      "modelName": {
+        "type": "String",
+        "value": "gpt-4o"
+      },
+      "modelSkuName": {
+        "type": "String",
+        "value": "GlobalStandard"
+      },
+      "modelVersion": {
+        "type": "String",
+        "value": "2024-08-06"
+      },
+      "storageName": {
+        "type": "String",
+        "value": "agentservicestorage"
+      },
+      "tags": {
+        "type": "Object",
+        "value": {}
+      }
+    },
+    "parametersLink": null,
+    "providers": [
+      {
+        "id": null,
+        "namespace": "Microsoft.Resources",
+        "providerAuthorizationConsentState": null,
+        "registrationPolicy": null,
+        "registrationState": null,
+        "resourceTypes": [
+          {
+            "aliases": null,
+            "apiProfiles": null,
+            "apiVersions": null,
+            "capabilities": null,
+            "defaultApiVersion": null,
+            "locationMappings": null,
+            "locations": [
+              null
+            ],
+            "properties": null,
+            "resourceType": "deployments",
+            "zoneMappings": null
+          }
+        ]
+      }
+    ],
+    "provisioningState": "Succeeded",
+    "templateHash": "9967563617197017245",
+    "templateLink": null,
+    "timestamp": "2025-03-17T16:04:35.846861+00:00",
+    "validatedResources": null
+  },
+  "resourceGroup": "rg-contoso-agent-workshop",
+  "tags": null,
+  "type": "Microsoft.Resources/deployments"
+}
