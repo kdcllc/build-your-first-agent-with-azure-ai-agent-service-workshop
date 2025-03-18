@@ -29,7 +29,7 @@ class Utilities:
         file_name = f"{file_name}.{file_id}{file_extension}"
 
         env = os.getenv("ENVIRONMENT", "local")
-        folder_path = Path(f"{'src/workshop/' if env == 'container' else ''}files")
+        folder_path = Path(f"{'src/workshop/' if env == 'container' else ''}.files")
 
         folder_path.mkdir(parents=True, exist_ok=True)
 
