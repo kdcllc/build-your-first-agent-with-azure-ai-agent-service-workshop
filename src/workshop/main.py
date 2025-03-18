@@ -180,17 +180,18 @@ async def main() -> None:
 
     agent, thread = await initialize()
 
-    while True:
-        # Get user input prompt in the terminal using a pretty shade of green
-        print("\n")
-        prompt = input(f"{tc.GREEN}Enter your query (type exit to finish): {tc.RESET}")
-        if prompt.lower() == "exit":
-            break
-        if not prompt:
-            continue
-        await post_message(agent=agent, thread_id=thread.id, content=prompt, thread=thread)
+    with tracer.start_as_current_span(scenario):
+        while True:
+            # Get user input prompt in the terminal using a pretty shade of green
+            print("\n")
+            prompt = input(f"{tc.GREEN}Enter your query (type exit to finish): {tc.RESET}")
+            if prompt.lower() == "exit":
+                break
+            if not prompt:
+                continue
+            await post_message(agent=agent, thread_id=thread.id, content=prompt, thread=thread)
 
-    await cleanup(agent, thread)
+        await cleanup(agent, thread)
 
 
 if __name__ == "__main__":
