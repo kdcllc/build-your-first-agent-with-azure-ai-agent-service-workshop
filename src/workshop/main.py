@@ -58,19 +58,14 @@ functions = AsyncFunctionTool(
 # INSTRUCTIONS_FILE = "instructions/instructions_file_search.txt"
 INSTRUCTIONS_FILE = "instructions/instructions_bing_grounding.txt"
 
-# Enable Azure Monitor tracing
-application_insights_connection_string = project_client.telemetry.get_connection_string()
-if not application_insights_connection_string:
-    print("Application Insights was not enabled for this project.")
-    print("Enable it via the 'Tracing' tab in your AI Foundry project page.")
-    exit()
-configure_azure_monitor(connection_string=application_insights_connection_string)
-
-scenario = os.path.basename(__file__)
-tracer = trace.get_tracer(__name__)
-
-# enable additional instrumentations
-project_client.telemetry.enable()
+async def configure_tracing():
+    # Enable Azure Monitor tracing
+    application_insights_connection_string = await project_client.telemetry.get_connection_string()
+    if not application_insights_connection_string:
+        print("Application Insights was not enabled for this project.")
+        print("Enable it via the 'Tracing' tab in your AI Foundry project page.")
+        exit()
+    return application_insights_connection_string
 
 async def add_agent_tools():
     """Add tools for the agent."""
@@ -99,6 +94,9 @@ async def add_agent_tools():
 
 async def initialize() -> tuple[Agent, AgentThread]:
     """Initialize the agent with the sales data schema and instructions."""
+
+    app_insights_connection_string = await configure_tracing()
+    configure_azure_monitor(connection_string=app_insights_connection_string)
 
     await add_agent_tools()
 
@@ -171,6 +169,12 @@ async def post_message(thread_id: str, content: str, agent: Agent, thread: Agent
     except Exception as e:
         utilities.log_msg_purple(f"An error occurred posting the message: {str(e)}")
 
+
+scenario = os.path.basename(__file__)
+tracer = trace.get_tracer(__name__)
+
+# enable additional instrumentations
+project_client.telemetry.enable()
 
 async def main() -> None:
     """
