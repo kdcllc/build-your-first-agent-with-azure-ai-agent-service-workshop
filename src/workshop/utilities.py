@@ -70,7 +70,7 @@ class Utilities:
 
         # Upload the files
         for file in files:
-            file_path = Path(f"{prefix}{file}")
+            file_path = os.path.join(os.path.dirname(__file__), f"{prefix}{file}")
             self.log_msg_purple(f"Uploading file: {file_path}")
             
             file_info = await project_client.agents.upload_file(file_path=file_path, purpose="assistants")

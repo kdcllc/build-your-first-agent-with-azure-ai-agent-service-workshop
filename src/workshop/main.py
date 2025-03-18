@@ -14,6 +14,10 @@ from azure.ai.projects.models import (
 )
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
+
+from opentelemetry import trace
+from azure.monitor.opentelemetry import configure_azure_monitor
+
 from sales_data import SalesData
 from stream_event_handler import StreamEventHandler
 from terminal_colors import TerminalColors as tc
@@ -49,11 +53,24 @@ functions = AsyncFunctionTool(
     }
 )
 
-INSTRUCTIONS_FILE = "instructions/instructions_function_calling.txt"
+# INSTRUCTIONS_FILE = "instructions/instructions_function_calling.txt"
 # INSTRUCTIONS_FILE = "instructions/instructions_code_interpreter.txt"
 # INSTRUCTIONS_FILE = "instructions/instructions_file_search.txt"
-# INSTRUCTIONS_FILE = "instructions/instructions_bing_grounding.txt"
+INSTRUCTIONS_FILE = "instructions/instructions_bing_grounding.txt"
 
+# Enable Azure Monitor tracing
+application_insights_connection_string = project_client.telemetry.get_connection_string()
+if not application_insights_connection_string:
+    print("Application Insights was not enabled for this project.")
+    print("Enable it via the 'Tracing' tab in your AI Foundry project page.")
+    exit()
+configure_azure_monitor(connection_string=application_insights_connection_string)
+
+scenario = os.path.basename(__file__)
+tracer = trace.get_tracer(__name__)
+
+# enable additional instrumentations
+project_client.telemetry.enable()
 
 async def add_agent_tools():
     """Add tools for the agent."""
@@ -62,22 +79,22 @@ async def add_agent_tools():
     toolset.add(functions)
 
     # Add the code interpreter tool
-    # code_interpreter = CodeInterpreterTool()
-    # toolset.add(code_interpreter)
+    code_interpreter = CodeInterpreterTool()
+    toolset.add(code_interpreter)
 
     # Add the tents data sheet to a new vector data store
-    # vector_store = await utilities.create_vector_store(
-    #     project_client,
-    #     files=[TENTS_DATA_SHEET_FILE],
-    #     vector_name_name="Contoso Product Information Vector Store",
-    # )
-    # file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
-    # toolset.add(file_search_tool)
+    vector_store = await utilities.create_vector_store(
+        project_client,
+        files=[TENTS_DATA_SHEET_FILE],
+        vector_name_name="Contoso Product Information Vector Store",
+    )
+    file_search_tool = FileSearchTool(vector_store_ids=[vector_store.id])
+    toolset.add(file_search_tool)
 
     # Add the Bing grounding tool
-    # bing_connection = await project_client.connections.get(connection_name=BING_CONNECTION_NAME)
-    # bing_grounding = BingGroundingTool(connection_id=bing_connection.id)
-    # toolset.add(bing_grounding)
+    bing_connection = await project_client.connections.get(connection_name=BING_CONNECTION_NAME)
+    bing_grounding = BingGroundingTool(connection_id=bing_connection.id)
+    toolset.add(bing_grounding)
 
 
 async def initialize() -> tuple[Agent, AgentThread]:
@@ -93,7 +110,7 @@ async def initialize() -> tuple[Agent, AgentThread]:
         instructions_path = os.path.join(os.path.dirname(__file__), INSTRUCTIONS_FILE)
 
         INSTRUCTIONS_FILE_PATH = f"{'src/workshop/' if env == 'container' else ''}{instructions_path}"
-        
+
         with open(INSTRUCTIONS_FILE_PATH, "r", encoding="utf-8", errors="ignore") as file:
             instructions = file.read()
 
@@ -160,6 +177,7 @@ async def main() -> None:
     Main function to run the agent.
     Example questions: Sales by region, top-selling products, total shipping costs by region, show as a pie chart.
     """
+
     agent, thread = await initialize()
 
     while True:
